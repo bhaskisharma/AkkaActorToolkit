@@ -95,7 +95,7 @@ object ActorCap extends App {
     override def receive: Receive = {
       case Inc => count += 1
       case Dec => count -= 1
-      case print => println("Counter value " + count)
+      case _ => println("Counter value " + count)
 
     }
   }
@@ -150,7 +150,7 @@ object ActorCap extends App {
         else
           fund += amount
         sender() ! TransSuccess("Deposit Successfully")
-      case WithDraw(amount) => {
+      case WithDraw(amount) =>
         if (amount < 0)
           sender() ! TransFailure("Amount invalid")
         else if (amount > fund)
@@ -158,7 +158,6 @@ object ActorCap extends App {
         else
           fund -= amount
         sender() ! TransSuccess("withdraw Successfully")
-      }
       case Statement => sender() ! s"your mini statement $fund"
     }
   }
